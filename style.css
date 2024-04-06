@@ -1,0 +1,29 @@
+.content-container {
+  margin: 0.5em;
+  display: grid;
+  grid-template-areas:
+    "calc-info calc-info calc-info calc-info"
+    "pre-work-info pre-work-info pre-work-info pre-work-info"
+    "pre-work-input pre-work-value pre-work-low pre-work-high";
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto 1fr auto;
+}
+.calc-info {
+  grid-area: calc-info;
+}
+#pre-work-info {
+  border-top: 2px solid black;
+  grid-area: pre-work-info;
+}
+#pre-work-input {
+  grid-area: pre-work-input;
+}
+#pre-work-value {
+  grid-area: pre-work-value;
+}
+#pre-work-low {
+  grid-area: pre-work-low;
+}
+#pre-work-high {
+  grid-area: pre-work-high;
+}

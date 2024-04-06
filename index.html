@@ -3,13 +3,28 @@
 
 <head>
   <meta charset="UTF-8">
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
   <link rel="stylesheet" href="style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>KAP Cost Calculator</title>
 </head>
 
 <body>
 
+  <div class="content-container">
+    <div class="calc-info">
+      <h1>KAP Cost Calculator</h1>
+      <h3>Adjust the following parameters to estimate your total cost:</h3>
+    </div>
+    <h4 id="pre-work-info">How many pre-KAP sessions would you like?</h4>
+    <input type="range" min="3" max="20" value="0" id="pre-work-input">
+    <p><span id="pre-work-value">3</span></p>
+    <p>$<span id="pre-work-low">480</span></p>
+    <p>$<span id="pre-work-high">600</span></p>
+  </div>
+  </div>
 
 </body>
 <script src="app.js"></script>
