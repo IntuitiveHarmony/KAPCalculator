@@ -1,51 +1,169 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+/* End reset */
+body {
+  font-family: Verdana, sans-serif;
+}
+h4 {
+  font-weight: bold;
+  font-size: 1em;
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+}
+
+.number {
+  font-size: 1.1em;
+}
 .content-container {
+  max-width: 600px;
   margin: 0.5em;
   display: flex;
   flex-direction: column;
 }
-.pre-work-container {
+.content {
+  margin-bottom: 0.7em;
+}
+.section {
   padding: 0.5em;
+  padding-top: 0.1em;
   border: 2px solid rgb(84, 79, 79);
+  margin-bottom: 1em;
 }
 .pre-work-controls {
   display: flex;
   justify-content: space-between;
 }
-/* .content-container {
-  margin: 0.5em;
-  display: grid;
-  grid-template-areas:
-    "calc-info"
-    "pre-work-container";
-  grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr auto;
-}
-.calc-info {
-  grid-area: calc-info;
-}
-.pre-work-container {
-  grid-area: pre-work-container;
-
-  display: grid;
-  grid-template-areas:
-    "pre-work-info pre-work-info pre-work-info"
-    "pre-work-input pre-work-value pre-work-low pre-work-high";
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: auto 1fr auto;
-}
-#pre-work-info {
-
-  grid-area: pre-work-info;
-}
 #pre-work-input {
-  grid-area: pre-work-input;
+  max-width: 75px;
 }
-#pre-work-value {
-  grid-area: pre-work-value;
+#KAP-header {
+  font-size: 1.7em;
+  margin-bottom: 0.5em;
 }
-#pre-work-low {
-  grid-area: pre-work-low;
-}
-#pre-work-high {
-  grid-area: pre-work-high;
-} */
