@@ -1,18 +1,40 @@
 .content-container {
   margin: 0.5em;
+  display: flex;
+  flex-direction: column;
+}
+.pre-work-container {
+  padding: 0.5em;
+  border: 2px solid rgb(84, 79, 79);
+}
+.pre-work-controls {
+  display: flex;
+  justify-content: space-between;
+}
+/* .content-container {
+  margin: 0.5em;
   display: grid;
   grid-template-areas:
-    "calc-info calc-info calc-info calc-info"
-    "pre-work-info pre-work-info pre-work-info pre-work-info"
-    "pre-work-input pre-work-value pre-work-low pre-work-high";
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+    "calc-info"
+    "pre-work-container";
+  grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto;
 }
 .calc-info {
   grid-area: calc-info;
 }
+.pre-work-container {
+  grid-area: pre-work-container;
+
+  display: grid;
+  grid-template-areas:
+    "pre-work-info pre-work-info pre-work-info"
+    "pre-work-input pre-work-value pre-work-low pre-work-high";
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto 1fr auto;
+}
 #pre-work-info {
-  border-top: 2px solid black;
+
   grid-area: pre-work-info;
 }
 #pre-work-input {
@@ -26,4 +48,4 @@
 }
 #pre-work-high {
   grid-area: pre-work-high;
-}
+} */
