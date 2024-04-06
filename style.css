@@ -28,7 +28,6 @@ cite,
 code,
 del,
 dfn,
-em,
 img,
 ins,
 kbd,
@@ -128,6 +127,7 @@ table {
   border-spacing: 0;
 }
 /* End reset */
+
 body {
   font-family: Verdana, sans-serif;
 }
@@ -135,9 +135,11 @@ h4 {
   font-weight: bold;
   font-size: 1em;
   margin-top: 0.3em;
-  margin-bottom: 0.3em;
+  margin-bottom: 0.5em;
 }
-
+.hidden {
+  display: none;
+}
 .number {
   font-size: 1.1em;
 }
@@ -151,12 +153,16 @@ h4 {
   margin-bottom: 0.7em;
 }
 .section {
-  padding: 0.5em;
+  padding: 0.7em;
   padding-top: 0.1em;
   border: 2px solid rgb(84, 79, 79);
   margin-bottom: 1em;
 }
 .pre-work-controls {
+  display: flex;
+  justify-content: space-between;
+}
+.medicine-type-controls {
   display: flex;
   justify-content: space-between;
 }
