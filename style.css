@@ -189,18 +189,20 @@ button {
   display: flex;
   justify-content: space-between;
 }
- {
-  display: flex;
-  justify-content: space-between;
-}
 .iv-info,
 .im-info {
   display: flex;
   justify-content: space-between;
 }
+.calc-display {
+  display: flex;
+  justify-content: space-around;
+}
 #pre-work-input,
 #im-sessions-input,
-#im-integration-input {
+#im-integration-input,
+#iv-sessions-input,
+#iv-integration-input {
   max-width: 75px;
 }
 #KAP-header {

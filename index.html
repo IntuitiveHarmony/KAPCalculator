@@ -15,12 +15,16 @@
       <h1 id="KAP-header">KAP Cost Calculator</h1>
       <h3 class="content">Adjust the following parameters to <em>estimate</em> your total cost:</h3>
     </div>
+    <div class="calc-display content">
+      <p>Low Total $<span class="number" id="low-total"></span></p>
+      <p>High Total $<span class="number" id="high-total"></span></p>
+    </div>
     <div class="pre-work-container section">
       <h4>How many pre-KAP sessions would you like?</h4>
       <p class="content">This is where you will setup a framework with Dr. Aal for your KAP sessions. Cost range $160 - $200 ea (minimum 3)</p>
       <h4>Pre-KAP Sessions</h5>
         <div class="pre-work-controls">
-          <input type="range" min="3" max="20" value="0" id="pre-work-input">
+          <input class="slider" type="range" min="3" max="20" value="0" id="pre-work-input">
           <p><span id="pre-work-value">3</span></p>
           <div class="pre-low-cell">
             <p>$<span class="number" id="pre-work-low"></span></p>
@@ -64,7 +68,7 @@
         <div class="iv-sessions-info">
           <h4>IV KAP Sessions</h4>
           <div class="iv-sessions-controls content">
-            <input type="range" min="1" max="20" value="0" id="iv-sessions-input">
+            <input class="slider" type="range" min="1" max="20" value="0" id="iv-sessions-input">
             <p><span id="iv-sessions-value"></span></p>
             <div class="pre-low-cell">
               <p>$<span class="number" id="iv-sessions-low"></span></p>
@@ -81,7 +85,7 @@
           </div>
           <h4>Integration Sessions</h4>
           <div class="iv-integration-controls content">
-            <input type="range" min="1" max="20" value="0" id="iv-integration-input" disabled>
+            <input class="slider" type="range" min="1" max="20" value="0" id="iv-integration-input" disabled>
             <p><span id="iv-integration-value"></span></p>
             <div class="pre-low-cell">
               <p>$<span class="number" id="iv-integration-low"></span></p>
@@ -112,7 +116,7 @@
         <div class="im-sessions-info">
           <h4>IM KAP Sessions</h4>
           <div class="im-sessions-controls content">
-            <input type="range" min="1" max="20" value="0" id="im-sessions-input">
+            <input class="slider" type="range" min="1" max="20" value="0" id="im-sessions-input">
             <p><span id="im-sessions-value"></span></p>
             <div class="pre-low-cell">
               <p>$<span class="number" id="im-sessions-low"></span></p>
@@ -129,7 +133,7 @@
           </div>
           <h4>Integration Sessions</h4>
           <div class="im-integration-controls content">
-            <input type="range" min="1" max="20" value="0" id="im-integration-input" disabled>
+            <input class="slider" type="range" min="1" max="20" value="0" id="im-integration-input" disabled>
             <p><span id="im-integration-value"></span></p>
             <div class="pre-low-cell">
               <p>$<span class="number" id="im-integration-low"></span></p>

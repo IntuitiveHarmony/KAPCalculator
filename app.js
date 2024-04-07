@@ -7,6 +7,9 @@ let numIVIntegration;
 let numIMIntegration;
 let numSubIntegration;
 
+let lowTotalCost;
+let highTotalCost;
+
 // Sliding scale for Shoshana
 const shan = {
   low: 160,
@@ -46,6 +49,10 @@ const sub = {
 // ~~~~~~~~~~~~~
 // DOM Variables
 // ~~~~~~~~~~~~~
+// Total Cost
+const lowTotal = document.getElementById("low-total");
+const highTotal = document.getElementById("high-total");
+
 // Pre-Work sessions
 const preWorkSlider = document.getElementById("pre-work-input");
 const preWorkValue = document.getElementById("pre-work-value");
@@ -56,6 +63,8 @@ const radioButtons = document.querySelectorAll(".medicine-radio");
 const medicineControls = document.querySelectorAll(".medicine-controls");
 
 // KAP Sliders
+// All Sliders
+const allSliders = document.querySelectorAll(".slider");
 // IM Sliders
 const imSessionSlider = document.getElementById("im-sessions-input");
 const imIntegrationSlider = document.getElementById("im-integration-input");
@@ -80,6 +89,7 @@ const ivIntegrationHigh = document.getElementById("iv-integration-high");
 // ~~~~~~~~~
 // Listeners
 // ~~~~~~~~~
+
 // Radio Buttons
 // Loop over each one and add an event listener
 radioButtons.forEach((radio, index) => {
@@ -213,11 +223,77 @@ ivIntegrationSlider.addEventListener("input", (event) => {
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 });
 
+// Calculate the total if any slider or button is used
+radioButtons.forEach((radio) => {
+  radio.addEventListener("click", () => {
+    calculateTotalCost();
+  });
+});
+
+allSliders.forEach((slider) => {
+  slider.addEventListener("input", () => {
+    calculateTotalCost();
+  });
+});
+
 // ~~~~~~~~~
 // Functions
 // ~~~~~~~~~
 const calculateWorkCost = (sessionAmt, scale) => {
   return sessionAmt * scale;
+};
+
+const calculateTotalCost = () => {
+  // Conditional based on medicine type
+  // IV Selected
+  if (medicineType === "iv") {
+    // Before Number of KAP sessions selected
+    lowTotalCost = calculateWorkCost(numIntroSession, shan.low) + iv.initialLow;
+    highTotalCost =
+      calculateWorkCost(numIntroSession, shan.high) + iv.initialHigh;
+    // Factor in number of KAP sessions
+    if (numIVSession != undefined) {
+      lowTotalCost +=
+        numIVSession * shan.low +
+        numIVSession * iv.subsequent +
+        numIVIntegration * shan.low;
+      highTotalCost +=
+        numIVSession * shan.high +
+        numIVSession * iv.subsequent +
+        numIVIntegration * shan.high;
+    }
+  }
+  // IM Selected
+  else if (medicineType === "im") {
+    // Before Number of KAP sessions selected
+    lowTotalCost = calculateWorkCost(numIntroSession, shan.low) + im.initialLow;
+    highTotalCost =
+      calculateWorkCost(numIntroSession, shan.high) + im.initialHigh;
+    // Factor in number of KAP sessions
+    if (numIMSession != undefined) {
+      lowTotalCost +=
+        numIMSession * shan.low +
+        numIVSession * im.subsequent +
+        numIMIntegration * shan.low;
+      highTotalCost +=
+        numIMSession * shan.high +
+        numIVSession * im.subsequent +
+        numIMIntegration * shan.high;
+    }
+  }
+  // No medicine type selected
+  else {
+    // Calculate the cost
+    lowTotalCost = calculateWorkCost(numIntroSession, shan.low);
+    highTotalCost = calculateWorkCost(numIntroSession, shan.high);
+  }
+  // Display to DOM
+  lowTotal.textContent = lowTotalCost
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  highTotal.textContent = highTotalCost
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
 // Populate the DOM with variables upon page load
@@ -231,4 +307,6 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("im-consult-low").textContent = im.initialLow;
   document.getElementById("im-consult-high").textContent = im.initialHigh;
   document.getElementById("sub-consult").textContent = sub.initial;
+
+  calculateTotalCost();
 });
