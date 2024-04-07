@@ -142,6 +142,7 @@ button {
   border: 1px solid #676767;
   padding: 6px 4px;
   text-align: center;
+  text-decoration: none;
   display: inline-block;
   font-size: 12px;
   font-weight: bold;
@@ -178,11 +179,15 @@ button {
 .radio-btn-container {
   display: flex;
 }
-.pre-work-controls {
+.pre-work-controls,
+.im-sessions-controls,
+.medicine-admin,
+.medicine-type-controls,
+.im-integration-controls {
   display: flex;
   justify-content: space-between;
 }
-.medicine-type-controls {
+ {
   display: flex;
   justify-content: space-between;
 }
@@ -191,7 +196,9 @@ button {
   display: flex;
   justify-content: space-between;
 }
-#pre-work-input {
+#pre-work-input,
+#im-sessions-input,
+#im-integration-input {
   max-width: 75px;
 }
 #KAP-header {

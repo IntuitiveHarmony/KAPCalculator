@@ -3,6 +3,9 @@
 // ~~~~~~~~~~~~~~~~~~
 let numIntroSession = 3;
 let numKAPSession;
+let numIVIntegration;
+let numIMIntegration;
+let numSubIntegration;
 
 // Sliding scale for Shoshana
 const shan = {
@@ -14,6 +17,9 @@ const shan = {
 // Progressive Variables
 // ~~~~~~~~~~~~~~~~~~~~~
 let medicineType;
+let numIVSession;
+let numIMSession;
+let numSubSession;
 
 const iv = {
   initialLow: 475,
@@ -48,24 +54,20 @@ const preWorkHigh = document.getElementById("pre-work-high");
 // Medicine type
 const radioButtons = document.querySelectorAll(".medicine-radio");
 const medicineControls = document.querySelectorAll(".medicine-controls");
+// KAP Sliders
+const imSessionSlider = document.getElementById("im-sessions-input");
+const imIntegrationSlider = document.getElementById("im-integration-input");
+const imValue = document.getElementById("im-sessions-value");
+const imIntegrationValue = document.getElementById("im-integration-value");
+const imSessionLow = document.getElementById("im-sessions-low");
+const imSessionHigh = document.getElementById("im-sessions-high");
+const imSessionAdmin = document.getElementById("im-admin");
+const imIntegrationLow = document.getElementById("im-integration-low");
+const imIntegrationHigh = document.getElementById("im-integration-high");
 
 // ~~~~~~~~~
 // Listeners
 // ~~~~~~~~~
-// Sliders
-preWorkSlider.addEventListener("input", (event) => {
-  // Get the current value of the slider
-  const currentValue = event.target.value;
-  // Update variable for calculator
-  numIntroSession = currentValue;
-  // Update the value displayed in the DOM
-  preWorkValue.textContent = currentValue;
-  // Calculate and display low to the DOM
-  preWorkLow.textContent = calculateWorkCost(numIntroSession, shan.low);
-  // Calculate and display high to the DOM
-  preWorkHigh.textContent = calculateWorkCost(numIntroSession, shan.high);
-});
-
 // Radio Buttons
 // Loop over each one and add an event listener
 radioButtons.forEach((radio, index) => {
@@ -81,6 +83,73 @@ radioButtons.forEach((radio, index) => {
     // Get Medicine Type for the calculator from id and remove the -input part
     medicineType = radio.id.replace("-input", "");
   });
+});
+
+// Sliders
+preWorkSlider.addEventListener("input", (event) => {
+  // Get the current value of the slider
+  const currentValue = event.target.value;
+  // Update variable for calculator
+  numIntroSession = currentValue;
+  // Update the value displayed in the DOM
+  preWorkValue.textContent = currentValue;
+  // Calculate and display low to the DOM Uses reg expression to put comma for 1,000+ numbers
+  preWorkLow.textContent = calculateWorkCost(numIntroSession, shan.low)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  // Calculate and display high to the DOM Uses reg expression to put comma for 1,000+ numbers
+  preWorkHigh.textContent = calculateWorkCost(numIntroSession, shan.high)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+});
+
+imSessionSlider.addEventListener("input", (event) => {
+  // Get the current value of the slider
+  const currentValue = event.target.value;
+  // Update variable for calculator
+  numIMSession = currentValue;
+  // Update DOM with new variable amount
+  imValue.textContent = numIMSession;
+  // Calculate the cost for Shoshana and add to the DOM
+  imSessionLow.textContent = calculateWorkCost(numIMSession, shan.low)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  imSessionHigh.textContent = calculateWorkCost(numIMSession, shan.high)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  // calculate cost for medicine and update DOM
+  imSessionAdmin.textContent = (numIMSession * im.subsequent)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  // Update Integration sessions variable and DOM
+  numIMIntegration = numIMSession;
+  imIntegrationValue.textContent = numIMIntegration;
+  // Calculate integration cost and update DOM
+  imIntegrationLow.textContent = calculateWorkCost(numIMIntegration, shan.low)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  imIntegrationHigh.textContent = calculateWorkCost(numIMIntegration, shan.high)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  // Update Integration slider params
+  imIntegrationSlider.min = numIMSession;
+  imIntegrationSlider.value = numIMSession;
+  // Enable the Integration slider
+  imIntegrationSlider.disabled = false;
+});
+
+imIntegrationSlider.addEventListener("input", (event) => {
+  // Update the variable
+  numIMIntegration = event.target.value;
+  // Update the DOM
+  imIntegrationValue.textContent = numIMIntegration;
+  // Update the cost
+  imIntegrationLow.textContent = calculateWorkCost(numIMIntegration, shan.low)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  imIntegrationHigh.textContent = calculateWorkCost(numIMIntegration, shan.high)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 });
 
 // ~~~~~~~~~
