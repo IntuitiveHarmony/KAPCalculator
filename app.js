@@ -52,6 +52,7 @@ const medicineControls = document.querySelectorAll(".medicine-controls");
 // ~~~~~~~~~
 // Listeners
 // ~~~~~~~~~
+// Sliders
 preWorkSlider.addEventListener("input", (event) => {
   // Get the current value of the slider
   const currentValue = event.target.value;
@@ -68,11 +69,11 @@ preWorkSlider.addEventListener("input", (event) => {
 // Radio Buttons
 // Loop over each one and add an event listener
 radioButtons.forEach((radio, index) => {
-  radio.addEventListener("change", () => {
+  radio.addEventListener("click", () => {
     // Deselect all of the Radio buttons
-    radioButtons.forEach((btn) => (btn.checked = false));
+    radioButtons.forEach((btn) => btn.classList.remove("selected-radio"));
     // Select the clicked radio button
-    radio.checked = true;
+    radio.classList.add("selected-radio");
     // Hide all medicine controls
     medicineControls.forEach((control) => control.classList.add("hidden"));
     // Show the corresponding medicine Controls
@@ -81,10 +82,23 @@ radioButtons.forEach((radio, index) => {
     medicineType = radio.id.replace("-input", "");
   });
 });
+
 // ~~~~~~~~~
 // Functions
 // ~~~~~~~~~
-
 const calculateWorkCost = (sessionAmt, scale) => {
   return sessionAmt * scale;
 };
+
+// Populate the DOM with variables upon page load
+document.addEventListener("DOMContentLoaded", function () {
+  // Shans pre-work with 3 hr minimum
+  document.getElementById("pre-work-low").textContent = shan.low * 3;
+  document.getElementById("pre-work-high").textContent = shan.high * 3;
+  // Dr. Markey's consults
+  document.getElementById("iv-consult-low").textContent = iv.initialLow;
+  document.getElementById("iv-consult-high").textContent = iv.initialHigh;
+  document.getElementById("im-consult-low").textContent = im.initialLow;
+  document.getElementById("im-consult-high").textContent = im.initialHigh;
+  document.getElementById("sub-consult").textContent = sub.initial;
+});

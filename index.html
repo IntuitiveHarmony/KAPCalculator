@@ -3,9 +3,6 @@
 
 <head>
   <meta charset="UTF-8">
-
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-
   <link rel="stylesheet" href="style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KAP Cost Calculator</title>
@@ -20,16 +17,16 @@
     </div>
     <div class="pre-work-container section">
       <h4>How many pre-KAP sessions would you like?</h4>
-      <p class="content">This is where we setup a framework for your KAP sessions. Cost range $160 - $200 /hr (minimum 3)</p>
+      <p class="content">This is where you will setup a framework with Dr. Aal for your KAP sessions. Cost range $160 - $200 /hr (minimum 3)</p>
       <div class="pre-work-controls">
         <input type="range" min="3" max="20" value="0" id="pre-work-input">
         <p><span id="pre-work-value">3</span> hrs</p>
         <div class="pre-low-cell">
-          <p>$<span class="number" id="pre-work-low">480</span></p>
+          <p>$<span class="number" id="pre-work-low"></span></p>
           <p>low</p>
         </div>
         <div class="pre-high-cell">
-          <p>$<span class="number" id="pre-work-high">600</span></p>
+          <p>$<span class="number" id="pre-work-high"></span></p>
           <p>high</p>
         </div>
       </div>
@@ -37,22 +34,53 @@
     <div class="medicine-type-container section">
       <h4>How would you like the medicine administered?</h4>
       <div class="medicine-type-controls content">
-        <input type="radio" class="medicine-radio" name="iv-input" id="iv-input">
-        <label for="iv-input">IV Drip</label>
-        <input type="radio" class="medicine-radio" name="im-input" id="im-input">
-        <label for="im-input">Intramuscular (IM) </label>
-        <input type="radio" class="medicine-radio" name="sub-input" id="sub-input">
-        <label for="sub-input">Sublingual (Oral)</label>
+        <div class="radio-btn-container">
+          <button class="medicine-radio" id="iv-input">IV Drip</button>
+        </div>
+        <div class="radio-btn-container">
+          <button class="medicine-radio" id="im-input">Intramuscular (IM)</button>
+        </div>
+        <div class="radio-btn-container">
+          <button class="medicine-radio" id="sub-input">Sublingual (Oral)</button>
+        </div>
       </div>
       <!-- The medicine controls will be hidden or shown based on radio buttons -->
       <div class="medicine-controls hidden" id="iv-controls">
         <p class="content">IV administration involves injecting the medicine directly into the bloodstream through a vein</p>
+        <div class="iv-info content">
+          <h5>Consult Dr. Markey: </h5>
+          <div class="iv-consult-low-cell">
+            <p>$<span class="number" id="iv-consult-low"></span></p>
+            <p>low</p>
+          </div>
+          <div class="iv-consult-high-cell">
+            <p>$<span class="number" id="iv-consult-high"></span></p>
+            <p>high</p>
+          </div>
+        </div>
       </div>
       <div class="medicine-controls hidden" id="im-controls">
-        <p class="content">IM administration involves injecting medications into the muscle tissue.</p>
+        <p class="content">IM administration involves injecting the medicine into the muscle tissue.</p>
+        <div class="im-info content">
+          <h5>Consult Dr. Markey:</h5>
+          <div class="im-consult-low-cell">
+            <p>$<span class="number" id="im-consult-low"></span></p>
+            <p>low</p>
+          </div>
+          <div class="im-consult-high-cell">
+            <p>$<span class="number" id="im-consult-high"></span></p>
+            <p>high</p>
+          </div>
+        </div>
       </div>
       <div class="medicine-controls hidden" id="sub-controls">
         <p class="content">Sublingual administration involves placing the medicine under the tongue, allowing it to be absorbed directly into the bloodstream through the mucous membranes.</p>
+        <div class="im-info content">
+          <h5>Consult Dr. Markey:</h5>
+          <div class="sub-consult-cell">
+            <p>$<span class="number" id="sub-consult"></span></p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
