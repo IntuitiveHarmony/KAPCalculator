@@ -247,8 +247,9 @@ const calculateTotalCost = () => {
   // Conditional based on medicine type
   // IV Selected
   if (medicineType === "iv") {
-    // Before Number of KAP sessions selected
-    lowTotalCost = calculateWorkCost(numIntroSession, shan.low) + iv.initialLow;
+    // Before Number of KAP sessions selected includes consult
+    lowTotalCost =
+      calculateWorkCost(numIntroSession, shan.low) + iv.initialHigh;
     highTotalCost =
       calculateWorkCost(numIntroSession, shan.high) + iv.initialHigh;
     // Factor in number of KAP sessions
@@ -266,18 +267,19 @@ const calculateTotalCost = () => {
   // IM Selected
   else if (medicineType === "im") {
     // Before Number of KAP sessions selected
-    lowTotalCost = calculateWorkCost(numIntroSession, shan.low) + im.initialLow;
+    lowTotalCost =
+      calculateWorkCost(numIntroSession, shan.low) + im.initialHigh;
     highTotalCost =
       calculateWorkCost(numIntroSession, shan.high) + im.initialHigh;
     // Factor in number of KAP sessions
     if (numIMSession != undefined) {
       lowTotalCost +=
         numIMSession * shan.low +
-        numIVSession * im.subsequent +
+        numIMSession * im.subsequent +
         numIMIntegration * shan.low;
       highTotalCost +=
         numIMSession * shan.high +
-        numIVSession * im.subsequent +
+        numIMSession * im.subsequent +
         numIMIntegration * shan.high;
     }
   }
@@ -302,9 +304,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("pre-work-low").textContent = shan.low * 3;
   document.getElementById("pre-work-high").textContent = shan.high * 3;
   // Dr. Markey's consults
-  document.getElementById("iv-consult-low").textContent = iv.initialLow;
   document.getElementById("iv-consult-high").textContent = iv.initialHigh;
-  document.getElementById("im-consult-low").textContent = im.initialLow;
   document.getElementById("im-consult-high").textContent = im.initialHigh;
   document.getElementById("sub-consult").textContent = sub.initial;
 

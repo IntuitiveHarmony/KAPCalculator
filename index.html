@@ -55,18 +55,17 @@
         <p class="content">IV administration involves injecting the medicine directly into the bloodstream through a vein</p>
         <div class="iv-info content">
           <h5>Consult Dr. Markey: </h5>
-          <div class="iv-consult-low-cell">
-            <p>$<span class="number" id="iv-consult-low"></span></p>
-            <p>low</p>
-          </div>
           <div class="iv-consult-high-cell">
             <p>$<span class="number" id="iv-consult-high"></span></p>
-            <p>high</p>
           </div>
         </div>
         <!-- IV Slider -->
         <div class="iv-sessions-info">
           <h4>IV KAP Sessions</h4>
+          <div class="medicine-admin content">
+            <h5>Medicine Admin:</h5>
+            <p>$<span class="number" id="iv-admin"></span></p>
+          </div>
           <div class="iv-sessions-controls content">
             <input class="slider" type="range" min="1" max="20" value="0" id="iv-sessions-input">
             <p><span id="iv-sessions-value"></span></p>
@@ -79,10 +78,7 @@
               <p>high</p>
             </div>
           </div>
-          <div class="medicine-admin content">
-            <h5>Medicine Admin:</h5>
-            <p>$<span class="number" id="iv-admin"></span></p>
-          </div>
+
           <h4>Integration Sessions</h4>
           <div class="iv-integration-controls content">
             <input class="slider" type="range" min="1" max="20" value="0" id="iv-integration-input" disabled>
@@ -103,10 +99,6 @@
         <p class="content">IM administration involves injecting the medicine into the muscle tissue.</p>
         <div class="im-info content">
           <h5>Consult Dr. Markey:</h5>
-          <div class="im-consult-low-cell">
-            <p>$<span class="number" id="im-consult-low"></span></p>
-            <p>low</p>
-          </div>
           <div class="im-consult-high-cell">
             <p>$<span class="number" id="im-consult-high"></span></p>
             <p>high</p>
@@ -115,6 +107,10 @@
         <!-- IM Slider -->
         <div class="im-sessions-info">
           <h4>IM KAP Sessions</h4>
+          <div class="medicine-admin content">
+            <h5>Medicine Admin:</h5>
+            <p>$<span class="number" id="im-admin"></span></p>
+          </div>
           <div class="im-sessions-controls content">
             <input class="slider" type="range" min="1" max="20" value="0" id="im-sessions-input">
             <p><span id="im-sessions-value"></span></p>
@@ -126,10 +122,6 @@
               <p>$<span class="number" id="im-sessions-high"></span></p>
               <p>high</p>
             </div>
-          </div>
-          <div class="medicine-admin content">
-            <h5>Medicine Admin:</h5>
-            <p>$<span class="number" id="im-admin"></span></p>
           </div>
           <h4>Integration Sessions</h4>
           <div class="im-integration-controls content">
