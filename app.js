@@ -189,7 +189,7 @@ ivSessionSlider.addEventListener("input", (event) => {
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   // calculate cost for medicine and update DOM
-  ivSessionAdmin.textContent = (numIVSession * im.subsequent)
+  ivSessionAdmin.textContent = (numIVSession * iv.subsequent)
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   // Update Integration sessions variable and DOM
@@ -255,13 +255,13 @@ const calculateTotalCost = () => {
     // Factor in number of KAP sessions
     if (numIVSession != undefined) {
       lowTotalCost +=
-        numIVSession * shan.low +
-        numIVSession * iv.subsequent +
-        numIVIntegration * shan.low;
+        calculateWorkCost(numIVSession, shan.low) +
+        calculateWorkCost(numIVSession, iv.subsequent) +
+        calculateWorkCost(numIVIntegration, shan.low);
       highTotalCost +=
-        numIVSession * shan.high +
-        numIVSession * iv.subsequent +
-        numIVIntegration * shan.high;
+        calculateWorkCost(numIVSession, shan.high) +
+        calculateWorkCost(numIVSession, iv.subsequent) +
+        calculateWorkCost(numIVIntegration, shan.high);
     }
   }
   // IM Selected
@@ -283,13 +283,20 @@ const calculateTotalCost = () => {
         numIMIntegration * shan.high;
     }
   }
+  // Sublingual Selected
+  else if (medicineType === "sub") {
+    // Before Number of KAP sessions selected
+    lowTotalCost = calculateWorkCost(numIntroSession, shan.low) + sub.initial;
+    highTotalCost = calculateWorkCost(numIntroSession, shan.high) + sub.initial;
+    // Factor in number of KAP sessions
+  }
   // No medicine type selected
   else {
     // Calculate the cost
     lowTotalCost = calculateWorkCost(numIntroSession, shan.low);
     highTotalCost = calculateWorkCost(numIntroSession, shan.high);
   }
-  // Display to DOM
+  // Display total cost estimates to DOM
   lowTotal.textContent = lowTotalCost
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -303,7 +310,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Shans pre-work with 3 hr minimum
   document.getElementById("pre-work-low").textContent = shan.low * 3;
   document.getElementById("pre-work-high").textContent = shan.high * 3;
-  // Dr. Markey's consults
+  // Provider's consults
   document.getElementById("iv-consult-high").textContent = iv.initialHigh;
   document.getElementById("im-consult-high").textContent = im.initialHigh;
   document.getElementById("sub-consult").textContent = sub.initial;
