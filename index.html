@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+  <script src="https://kit.fontawesome.com/0920e202c7.js" crossorigin="anonymous"></script>
+
   <meta charset="UTF-8">
   <link rel="stylesheet" href="style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +20,23 @@
     <div class="calc-display content">
       <p>Low Total $<span class="number" id="low-total"></span></p>
       <p>High Total $<span class="number" id="high-total"></span></p>
+    </div>
+    <div class="option-container section">
+      <h4>Do you have Medicaid, Triwest or have you worked with Dr. Aal in the past?</h4>
+      <button class="option-radio" id="medicaid-button"><i class="option-checkmark fa-solid fa-check hidden"></i> Click for Yes</button>
+      <p class="content"></p>
+      <p class="content"></p>
+      <div class="option-modal hidden">
+        <h4>Medicaid / Triwest and Pre work completion options</h4>
+        <p class="content">If you have Medicaid or Triwest your pre-KAP sessions and integration sessions are covered. You are responsible for the cost of the medicine provider and any fees associated with the administration of the medicine</p>
+        <button class="option-radio" id="medicaid-input">Medicaid / Triwest</button>
+        <p class="content"></p>
+        <p class="content"></p>
+        <h4>Completed pre-KAP sessions</h4>
+        <p class="content">If you have already seen Dr. Aal 3 or more times pre-KAP sessions are usually not needed</p>
+        <button class="option-radio" id="previous-work-input">Pre-KAP Completed</button>
+      </div>
+
     </div>
     <div class="pre-work-container section">
       <h4>How many pre-KAP sessions would you like?</h4>

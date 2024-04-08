@@ -10,6 +10,10 @@ let numSubIntegration;
 let lowTotalCost;
 let highTotalCost;
 
+let modalOpen = false;
+let hasMedicaid = false;
+let preWorkComplete = false;
+
 // Sliding scale for Shoshana
 const shan = {
   low: 160,
@@ -52,6 +56,13 @@ const sub = {
 // Total Cost
 const lowTotal = document.getElementById("low-total");
 const highTotal = document.getElementById("high-total");
+// Option Buttons
+const optionRadioButtons = document.querySelectorAll(".option-radio");
+const medicaidButton = document.getElementById("medicaid-button");
+const medicaidInputButton = document.getElementById("medicaid-input");
+const previousWorkInputButton = document.getElementById("previous-work-input");
+const optionModalElement = document.querySelector(".option-modal");
+const checkElement = document.querySelector(".option-checkmark");
 
 // Pre-Work sessions
 const preWorkSlider = document.getElementById("pre-work-input");
@@ -59,7 +70,7 @@ const preWorkValue = document.getElementById("pre-work-value");
 const preWorkLow = document.getElementById("pre-work-low");
 const preWorkHigh = document.getElementById("pre-work-high");
 // Medicine type
-const radioButtons = document.querySelectorAll(".medicine-radio");
+const medicineRadioButtons = document.querySelectorAll(".medicine-radio");
 const medicineControls = document.querySelectorAll(".medicine-controls");
 
 // KAP Sliders
@@ -92,10 +103,12 @@ const ivIntegrationHigh = document.getElementById("iv-integration-high");
 
 // Radio Buttons
 // Loop over each one and add an event listener
-radioButtons.forEach((radio, index) => {
+medicineRadioButtons.forEach((radio, index) => {
   radio.addEventListener("click", () => {
     // Deselect all of the Radio buttons
-    radioButtons.forEach((btn) => btn.classList.remove("selected-radio"));
+    medicineRadioButtons.forEach((btn) =>
+      btn.classList.remove("selected-radio")
+    );
     // Select the clicked radio button
     radio.classList.add("selected-radio");
     // Hide all medicine controls
@@ -223,8 +236,60 @@ ivIntegrationSlider.addEventListener("input", (event) => {
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 });
 
+// Show Medicaid / Triwest Pre-work completed Options Modal
+medicaidButton.addEventListener("click", () => {
+  // Close Modal
+  if (modalOpen) {
+    modalOpen = false; // update flag
+    optionModalElement.classList.add("hidden"); // Hide Modal
+    // Hide Checkmark
+    checkElement.classList.add("hidden");
+    medicaidButton.classList.remove("selected-radio");
+  }
+  // Open Modal
+  else {
+    modalOpen = true; // update flag
+    optionModalElement.classList.remove("hidden"); // Show Modal
+    // Show Checkmark
+    checkElement.classList.remove("hidden");
+    medicaidButton.classList.add("selected-radio");
+    // Reset Option Variables
+    hasMedicaid = false;
+    preWorkComplete = false;
+    // Reset Button selections
+    medicaidInputButton.classList.remove("selected-radio");
+    previousWorkInputButton.classList.remove("selected-radio");
+  }
+});
+
+medicaidInputButton.addEventListener("click", () => {
+  if (hasMedicaid) {
+    hasMedicaid = false;
+    medicaidInputButton.classList.remove("selected-radio");
+  } else {
+    hasMedicaid = true;
+    medicaidInputButton.classList.add("selected-radio");
+  }
+});
+
+previousWorkInputButton.addEventListener("click", () => {
+  if (preWorkComplete) {
+    preWorkComplete = false;
+    previousWorkInputButton.classList.remove("selected-radio");
+  } else {
+    preWorkComplete = true;
+    previousWorkInputButton.classList.add("selected-radio");
+  }
+});
+
 // Calculate the total if any slider or button is used
-radioButtons.forEach((radio) => {
+medicineRadioButtons.forEach((radio) => {
+  radio.addEventListener("click", () => {
+    calculateTotalCost();
+  });
+});
+
+optionRadioButtons.forEach((radio) => {
   radio.addEventListener("click", () => {
     calculateTotalCost();
   });

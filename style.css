@@ -138,7 +138,7 @@ h4 {
   margin-bottom: 0.5em;
 }
 button {
-  background-color: rgb(215, 238, 252);
+  background-color: rgb(225, 225, 225);
   border: 1px solid #676767;
   padding: 6px 4px;
   text-align: center;
@@ -150,9 +150,11 @@ button {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-
+.option-radio {
+  padding: 6px 8px;
+}
 .selected-radio {
-  background-color: rgb(106, 216, 250);
+  background-color: rgb(109, 230, 140);
 }
 
 .hidden {
@@ -197,6 +199,10 @@ button {
 .calc-display {
   display: flex;
   justify-content: space-around;
+}
+.option-controls {
+  display: flex;
+  justify-content: space-evenly;
 }
 #pre-work-input,
 #im-sessions-input,
