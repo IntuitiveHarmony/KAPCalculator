@@ -65,6 +65,7 @@ const optionModalElement = document.querySelector(".option-modal");
 const checkElement = document.querySelector(".option-checkmark");
 
 // Pre-Work sessions
+const preWorkContainer = document.querySelector(".pre-work-container");
 const preWorkSlider = document.getElementById("pre-work-input");
 const preWorkValue = document.getElementById("pre-work-value");
 const preWorkLow = document.getElementById("pre-work-low");
@@ -81,6 +82,7 @@ const imSessionSlider = document.getElementById("im-sessions-input");
 const imIntegrationSlider = document.getElementById("im-integration-input");
 const imSessionValue = document.getElementById("im-sessions-value");
 const imIntegrationValue = document.getElementById("im-integration-value");
+
 const imSessionLow = document.getElementById("im-sessions-low");
 const imSessionHigh = document.getElementById("im-sessions-high");
 const imSessionAdmin = document.getElementById("im-admin");
@@ -97,6 +99,9 @@ const ivSessionAdmin = document.getElementById("iv-admin");
 const ivIntegrationLow = document.getElementById("iv-integration-low");
 const ivIntegrationHigh = document.getElementById("iv-integration-high");
 
+const integrationContainers = document.querySelectorAll(
+  ".integration-container"
+);
 // ~~~~~~~~~
 // Listeners
 // ~~~~~~~~~
@@ -266,9 +271,13 @@ medicaidInputButton.addEventListener("click", () => {
   if (hasMedicaid) {
     hasMedicaid = false;
     medicaidInputButton.classList.remove("selected-radio");
+    if (preWorkComplete != true) {
+      numIntroSession = 3; //  Put pre-KAP sessions back the equation
+    }
   } else {
     hasMedicaid = true;
     medicaidInputButton.classList.add("selected-radio");
+    numIntroSession = 0; // Take pre-KAP sessions out of the equation
   }
 });
 
@@ -276,9 +285,13 @@ previousWorkInputButton.addEventListener("click", () => {
   if (preWorkComplete) {
     preWorkComplete = false;
     previousWorkInputButton.classList.remove("selected-radio");
+    if (hasMedicaid != true) {
+      numIntroSession = 3; //  Put pre-KAP sessions back the equation
+    }
   } else {
     preWorkComplete = true;
     previousWorkInputButton.classList.add("selected-radio");
+    numIntroSession = 0; // Take pre-KAP sessions out of the equation
   }
 });
 
@@ -292,6 +305,7 @@ medicineRadioButtons.forEach((radio) => {
 optionRadioButtons.forEach((radio) => {
   radio.addEventListener("click", () => {
     calculateTotalCost();
+    handlePreSessionContainer();
   });
 });
 
@@ -304,6 +318,25 @@ allSliders.forEach((slider) => {
 // ~~~~~~~~~
 // Functions
 // ~~~~~~~~~
+// Hide the pre-work container based on medicaid, triwest or pre-work completion
+const handlePreSessionContainer = () => {
+  if (hasMedicaid) {
+    integrationContainers.forEach((container) => {
+      container.classList.add("hidden");
+    });
+  } else {
+    integrationContainers.forEach((container) => {
+      container.classList.remove("hidden");
+    });
+  }
+
+  if (preWorkComplete || hasMedicaid) {
+    preWorkContainer.classList.add("hidden");
+  } else {
+    preWorkContainer.classList.remove("hidden");
+  }
+};
+
 const calculateWorkCost = (sessionAmt, scale) => {
   return sessionAmt * scale;
 };
@@ -328,6 +361,11 @@ const calculateTotalCost = () => {
         calculateWorkCost(numIVSession, iv.subsequent) +
         calculateWorkCost(numIVIntegration, shan.high);
     }
+    // Remove Integration sessions if has medicaid
+    if (hasMedicaid) {
+      lowTotalCost -= calculateWorkCost(numIVIntegration, shan.low);
+      highTotalCost -= calculateWorkCost(numIVIntegration, shan.high);
+    }
   }
   // IM Selected
   else if (medicineType === "im") {
@@ -346,6 +384,10 @@ const calculateTotalCost = () => {
         numIMSession * shan.high +
         numIMSession * im.subsequent +
         numIMIntegration * shan.high;
+    }
+    if (hasMedicaid) {
+      lowTotalCost -= calculateWorkCost(numIMIntegration, shan.low);
+      highTotalCost -= calculateWorkCost(numIMIntegration, shan.high);
     }
   }
   // Sublingual Selected
