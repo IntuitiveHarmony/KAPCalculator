@@ -3,9 +3,9 @@
 // ~~~~~~~~~~~~~~~~~~
 let numIntroSession = 3;
 let numKAPSession;
-let numIVIntegration;
-let numIMIntegration;
-let numSubIntegration;
+let numIVIntegration = 0;
+let numIMIntegration = 0;
+let numSubIntegration = 0;
 
 let lowTotalCost;
 let highTotalCost;
@@ -137,6 +137,7 @@ preWorkSlider.addEventListener("input", (event) => {
   preWorkLow.textContent = calculateWorkCost(numIntroSession, shan.low)
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
   // Calculate and display high to the DOM Uses reg expression to put comma for 1,000+ numbers
   preWorkHigh.textContent = calculateWorkCost(numIntroSession, shan.high)
     .toString()
@@ -184,12 +185,12 @@ imIntegrationSlider.addEventListener("input", (event) => {
   // Update the DOM
   imIntegrationValue.textContent = numIMIntegration;
   // Update the cost
-  imIntegrationLow.textContent = calculateWorkCost(numIMIntegration, shan.low)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  imIntegrationHigh.textContent = calculateWorkCost(numIMIntegration, shan.high)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  imIntegrationLow.textContent = formatThousands(
+    calculateWorkCost(numIMIntegration, shan.low)
+  );
+  imIntegrationHigh.textContent = formatThousands(
+    calculateWorkCost(numIMIntegration, shan.high)
+  );
 });
 
 ivSessionSlider.addEventListener("input", (event) => {
@@ -200,26 +201,24 @@ ivSessionSlider.addEventListener("input", (event) => {
   // Update DOM with new variable amount
   ivSessionValue.textContent = numIVSession;
   // Calculate the cost for Shoshana and add to the DOM
-  ivSessionLow.textContent = calculateWorkCost(numIVSession, shan.low)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  ivSessionHigh.textContent = calculateWorkCost(numIVSession, shan.high)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  ivSessionLow.textContent = formatThousands(
+    calculateWorkCost(numIVSession, shan.low)
+  );
+  ivSessionHigh.textContent = formatThousands(
+    calculateWorkCost(numIVSession, shan.high)
+  );
   // calculate cost for medicine and update DOM
-  ivSessionAdmin.textContent = (numIVSession * iv.subsequent)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  ivSessionAdmin.textContent = formatThousands(numIVSession * iv.subsequent);
   // Update Integration sessions variable and DOM
   numIVIntegration = numIVSession;
   ivIntegrationValue.textContent = numIVIntegration;
   // Calculate integration cost and update DOM
-  ivIntegrationLow.textContent = calculateWorkCost(numIVIntegration, shan.low)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  ivIntegrationHigh.textContent = calculateWorkCost(numIVIntegration, shan.high)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  ivIntegrationLow.textContent = formatThousands(
+    calculateWorkCost(numIVIntegration, shan.low)
+  );
+  ivIntegrationHigh.textContent = formatThousands(
+    calculateWorkCost(numIVIntegration, shan.high)
+  );
   // Update Integration slider params
   ivIntegrationSlider.min = numIVSession;
   ivIntegrationSlider.value = numIVSession;
@@ -233,12 +232,12 @@ ivIntegrationSlider.addEventListener("input", (event) => {
   // Update the DOM
   ivIntegrationValue.textContent = numIVIntegration;
   // Update the cost
-  ivIntegrationLow.textContent = calculateWorkCost(numIVIntegration, shan.low)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  ivIntegrationHigh.textContent = calculateWorkCost(numIVIntegration, shan.high)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  ivIntegrationLow.textContent = formatThousands(
+    calculateWorkCost(numIVIntegration, shan.low)
+  );
+  ivIntegrationHigh.textContent = formatThousands(
+    calculateWorkCost(numIVIntegration, shan.high)
+  );
 });
 
 // Show Medicaid / Triwest Pre-work completed Options Modal
@@ -250,6 +249,9 @@ medicaidButton.addEventListener("click", () => {
     // Hide Checkmark
     checkElement.classList.add("hidden");
     medicaidButton.classList.remove("selected-radio");
+    // Reset Option Variables
+    hasMedicaid = false;
+    preWorkComplete = false;
   }
   // Open Modal
   else {
@@ -258,9 +260,6 @@ medicaidButton.addEventListener("click", () => {
     // Show Checkmark
     checkElement.classList.remove("hidden");
     medicaidButton.classList.add("selected-radio");
-    // Reset Option Variables
-    hasMedicaid = false;
-    preWorkComplete = false;
     // Reset Button selections
     medicaidInputButton.classList.remove("selected-radio");
     previousWorkInputButton.classList.remove("selected-radio");
@@ -305,7 +304,7 @@ medicineRadioButtons.forEach((radio) => {
 optionRadioButtons.forEach((radio) => {
   radio.addEventListener("click", () => {
     calculateTotalCost();
-    handlePreSessionContainer();
+    handleOptionContainers();
   });
 });
 
@@ -318,8 +317,13 @@ allSliders.forEach((slider) => {
 // ~~~~~~~~~
 // Functions
 // ~~~~~~~~~
+// Add comma for 1000 numbers
+const formatThousands = (num) => {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
 // Hide the pre-work container based on medicaid, triwest or pre-work completion
-const handlePreSessionContainer = () => {
+const handleOptionContainers = () => {
   if (hasMedicaid) {
     integrationContainers.forEach((container) => {
       container.classList.add("hidden");
@@ -346,25 +350,22 @@ const calculateTotalCost = () => {
   // IV Selected
   if (medicineType === "iv") {
     // Before Number of KAP sessions selected includes consult
-    lowTotalCost =
-      calculateWorkCost(numIntroSession, shan.low) + iv.initialHigh;
+    lowTotalCost = calculateWorkCost(numIntroSession, shan.low) + iv.initialLow;
     highTotalCost =
       calculateWorkCost(numIntroSession, shan.high) + iv.initialHigh;
     // Factor in number of KAP sessions
     if (numIVSession != undefined) {
       lowTotalCost +=
         calculateWorkCost(numIVSession, shan.low) +
-        calculateWorkCost(numIVSession, iv.subsequent) +
-        calculateWorkCost(numIVIntegration, shan.low);
+        calculateWorkCost(numIVSession, iv.subsequent);
       highTotalCost +=
         calculateWorkCost(numIVSession, shan.high) +
-        calculateWorkCost(numIVSession, iv.subsequent) +
-        calculateWorkCost(numIVIntegration, shan.high);
+        calculateWorkCost(numIVSession, iv.subsequent);
     }
-    // Remove Integration sessions if has medicaid
-    if (hasMedicaid) {
-      lowTotalCost -= calculateWorkCost(numIVIntegration, shan.low);
-      highTotalCost -= calculateWorkCost(numIVIntegration, shan.high);
+    // Incorporate Integration if no medicaid
+    if (numIVIntegration > 0 && hasMedicaid != true) {
+      lowTotalCost += calculateWorkCost(numIVIntegration, shan.low);
+      highTotalCost += calculateWorkCost(numIVIntegration, shan.high);
     }
   }
   // IM Selected
@@ -376,18 +377,13 @@ const calculateTotalCost = () => {
       calculateWorkCost(numIntroSession, shan.high) + im.initialHigh;
     // Factor in number of KAP sessions
     if (numIMSession != undefined) {
-      lowTotalCost +=
-        numIMSession * shan.low +
-        numIMSession * im.subsequent +
-        numIMIntegration * shan.low;
-      highTotalCost +=
-        numIMSession * shan.high +
-        numIMSession * im.subsequent +
-        numIMIntegration * shan.high;
+      lowTotalCost += numIMSession * shan.low + numIMSession * im.subsequent;
+      highTotalCost += numIMSession * shan.high + numIMSession * im.subsequent;
     }
-    if (hasMedicaid) {
-      lowTotalCost -= calculateWorkCost(numIMIntegration, shan.low);
-      highTotalCost -= calculateWorkCost(numIMIntegration, shan.high);
+    // Incorporate Integration if no medicaid
+    if (numIMIntegration > 0 && hasMedicaid != true) {
+      lowTotalCost += calculateWorkCost(numIMIntegration, shan.low);
+      highTotalCost += calculateWorkCost(numIMIntegration, shan.high);
     }
   }
   // Sublingual Selected
@@ -404,12 +400,9 @@ const calculateTotalCost = () => {
     highTotalCost = calculateWorkCost(numIntroSession, shan.high);
   }
   // Display total cost estimates to DOM
-  lowTotal.textContent = lowTotalCost
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  highTotal.textContent = highTotalCost
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  lowTotal.textContent = formatThousands(lowTotalCost);
+
+  highTotal.textContent = formatThousands(highTotalCost);
 };
 
 // Populate the DOM with variables upon page load
