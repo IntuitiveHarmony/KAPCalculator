@@ -24,9 +24,9 @@ const shan = {
 // Progressive Variables
 // ~~~~~~~~~~~~~~~~~~~~~
 let medicineType;
-let numIVSession;
-let numIMSession;
-let numSubSession;
+let numIVSession = 4;
+let numIMSession = 4;
+let numSubSession = 4;
 
 const iv = {
   initialLow: 475,
@@ -134,14 +134,14 @@ preWorkSlider.addEventListener("input", (event) => {
   // Update the value displayed in the DOM
   preWorkValue.textContent = currentValue;
   // Calculate and display low to the DOM Uses reg expression to put comma for 1,000+ numbers
-  preWorkLow.textContent = calculateWorkCost(numIntroSession, shan.low)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  preWorkLow.textContent = formatThousands(
+    calculateWorkCost(numIntroSession, shan.low)
+  );
 
   // Calculate and display high to the DOM Uses reg expression to put comma for 1,000+ numbers
-  preWorkHigh.textContent = calculateWorkCost(numIntroSession, shan.high)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  preWorkHigh.textContent = formatThousands(
+    calculateWorkCost(numIntroSession, shan.high)
+  );
 });
 
 imSessionSlider.addEventListener("input", (event) => {
@@ -152,26 +152,24 @@ imSessionSlider.addEventListener("input", (event) => {
   // Update DOM with new variable amount
   imSessionValue.textContent = numIMSession;
   // Calculate the cost for Shoshana and add to the DOM
-  imSessionLow.textContent = calculateWorkCost(numIMSession, shan.low)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  imSessionHigh.textContent = calculateWorkCost(numIMSession, shan.high)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  imSessionLow.textContent = formatThousands(
+    calculateWorkCost(numIMSession, shan.low)
+  );
+  imSessionHigh.textContent = formatThousands(
+    calculateWorkCost(numIMSession, shan.high)
+  );
   // calculate cost for medicine and update DOM
-  imSessionAdmin.textContent = (numIMSession * im.subsequent)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  imSessionAdmin.textContent = formatThousands(numIMSession * im.subsequent);
   // Update Integration sessions variable and DOM
   numIMIntegration = numIMSession;
   imIntegrationValue.textContent = numIMIntegration;
   // Calculate integration cost and update DOM
-  imIntegrationLow.textContent = calculateWorkCost(numIMIntegration, shan.low)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  imIntegrationHigh.textContent = calculateWorkCost(numIMIntegration, shan.high)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  imIntegrationLow.textContent = formatThousands(
+    calculateWorkCost(numIMIntegration, shan.low)
+  );
+  imIntegrationHigh.textContent = formatThousands(
+    calculateWorkCost(numIMIntegration, shan.high)
+  );
   // Update Integration slider params
   imIntegrationSlider.min = numIMSession;
   imIntegrationSlider.value = numIMSession;
@@ -346,14 +344,17 @@ const calculateWorkCost = (sessionAmt, scale) => {
 };
 
 const calculateTotalCost = () => {
+  // Start with the pre-work
+  lowTotalCost = calculateWorkCost(numIntroSession, shan.low);
+  highTotalCost = calculateWorkCost(numIntroSession, shan.high);
+
   // Conditional based on medicine type
   // IV Selected
   if (medicineType === "iv") {
-    // Before Number of KAP sessions selected includes consult
-    lowTotalCost = calculateWorkCost(numIntroSession, shan.low) + iv.initialLow;
-    highTotalCost =
-      calculateWorkCost(numIntroSession, shan.high) + iv.initialHigh;
-    // Factor in number of KAP sessions
+    // Consult
+    lowTotalCost += iv.initialHigh;
+    highTotalCost += iv.initialHigh;
+    // KAP sessions
     if (numIVSession != undefined) {
       lowTotalCost +=
         calculateWorkCost(numIVSession, shan.low) +
@@ -363,57 +364,83 @@ const calculateTotalCost = () => {
         calculateWorkCost(numIVSession, iv.subsequent);
     }
     // Incorporate Integration if no medicaid
-    if (numIVIntegration > 0 && hasMedicaid != true) {
-      lowTotalCost += calculateWorkCost(numIVIntegration, shan.low);
-      highTotalCost += calculateWorkCost(numIVIntegration, shan.high);
+    if (hasMedicaid != true) {
+      // Check for positive value first
+      if (numIVIntegration > 0) {
+        lowTotalCost += calculateWorkCost(numIVIntegration, shan.low);
+        highTotalCost += calculateWorkCost(numIVIntegration, shan.high);
+      }
     }
   }
   // IM Selected
   else if (medicineType === "im") {
-    // Before Number of KAP sessions selected
-    lowTotalCost =
-      calculateWorkCost(numIntroSession, shan.low) + im.initialHigh;
-    highTotalCost =
-      calculateWorkCost(numIntroSession, shan.high) + im.initialHigh;
-    // Factor in number of KAP sessions
+    // Consult
+    lowTotalCost += im.initialHigh;
+    highTotalCost += im.initialHigh;
+    // KAP sessions
     if (numIMSession != undefined) {
-      lowTotalCost += numIMSession * shan.low + numIMSession * im.subsequent;
-      highTotalCost += numIMSession * shan.high + numIMSession * im.subsequent;
+      lowTotalCost +=
+        calculateWorkCost(numIMSession, shan.low) +
+        calculateWorkCost(numIMSession, im.subsequent);
+      highTotalCost +=
+        calculateWorkCost(numIMSession, shan.high) +
+        calculateWorkCost(numIMSession, im.subsequent);
     }
     // Incorporate Integration if no medicaid
-    if (numIMIntegration > 0 && hasMedicaid != true) {
-      lowTotalCost += calculateWorkCost(numIMIntegration, shan.low);
-      highTotalCost += calculateWorkCost(numIMIntegration, shan.high);
+    if (hasMedicaid != true) {
+      // Check for positive value first
+      if (numIMIntegration > 0) {
+        lowTotalCost += calculateWorkCost(numIMIntegration, shan.low);
+        highTotalCost += calculateWorkCost(numIMIntegration, shan.high);
+      }
     }
   }
   // Sublingual Selected
   else if (medicineType === "sub") {
-    // Before Number of KAP sessions selected
-    lowTotalCost = calculateWorkCost(numIntroSession, shan.low) + sub.initial;
-    highTotalCost = calculateWorkCost(numIntroSession, shan.high) + sub.initial;
-    // Factor in number of KAP sessions
+    // Consult
+    lowTotalCost += sub.initial;
+    highTotalCost += sub.initial;
   }
-  // No medicine type selected
-  else {
-    // Calculate the cost
-    lowTotalCost = calculateWorkCost(numIntroSession, shan.low);
-    highTotalCost = calculateWorkCost(numIntroSession, shan.high);
-  }
+
   // Display total cost estimates to DOM
   lowTotal.textContent = formatThousands(lowTotalCost);
-
   highTotal.textContent = formatThousands(highTotalCost);
 };
 
 // Populate the DOM with variables upon page load
 document.addEventListener("DOMContentLoaded", function () {
   // Shans pre-work with 3 hr minimum
-  document.getElementById("pre-work-low").textContent = shan.low * 3;
-  document.getElementById("pre-work-high").textContent = shan.high * 3;
+  preWorkLow.textContent = shan.low * numIntroSession;
+  preWorkHigh.textContent = shan.high * numIntroSession;
   // Provider's consults
   document.getElementById("iv-consult-high").textContent = iv.initialHigh;
   document.getElementById("im-consult-high").textContent = im.initialHigh;
   document.getElementById("sub-consult").textContent = sub.initial;
+
+  // KAP Sessions / Integration
+  imSessionAdmin.textContent = numIMSession * im.subsequent;
+  imSessionValue.textContent = numIMSession;
+  imIntegrationValue.textContent = numIMSession;
+  imSessionLow.textContent = calculateWorkCost(numIMSession, shan.low);
+  imSessionHigh.textContent = calculateWorkCost(numIMSession, shan.high);
+  imIntegrationLow.textContent = calculateWorkCost(numIMIntegration, shan.low);
+  imIntegrationHigh.textContent = calculateWorkCost(
+    numIMIntegration,
+    shan.high
+  );
+
+  ivSessionAdmin.textContent = numIVSession * iv.subsequent;
+  ivSessionValue.textContent = numIVSession;
+  ivIntegrationValue.textContent = numIVSession;
+  ivSessionLow.textContent = calculateWorkCost(numIVSession, shan.low);
+  ivSessionHigh.textContent = calculateWorkCost(numIVSession, shan.high);
+  ivIntegrationLow.textContent = calculateWorkCost(numIVIntegration, shan.low);
+  ivIntegrationHigh.textContent = calculateWorkCost(
+    numIVIntegration,
+    shan.high
+  );
+
+  imSessionSlider;
 
   calculateTotalCost();
 });
