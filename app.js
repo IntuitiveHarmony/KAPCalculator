@@ -3,9 +3,9 @@
 // ~~~~~~~~~~~~~~~~~~
 let numIntroSession = 3;
 let numKAPSession;
-let numIVIntegration = 0;
-let numIMIntegration = 0;
-let numSubIntegration = 0;
+let numIVIntegration = 4;
+let numIMIntegration = 4;
+let numSubIntegration = 4;
 
 let lowTotalCost;
 let highTotalCost;
