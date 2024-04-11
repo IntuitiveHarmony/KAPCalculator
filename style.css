@@ -150,13 +150,9 @@ button {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.option-radio {
-  padding: 6px 8px;
-}
 .selected-radio {
   background-color: rgb(109, 230, 140);
 }
-
 .hidden {
   display: none;
 }
@@ -192,9 +188,22 @@ button {
   justify-content: space-between;
 }
 .iv-info,
-.im-info {
+.im-info,
+.sub-info {
   display: flex;
   justify-content: space-between;
+}
+.check-box {
+  height: 17px;
+  width: 17px;
+  border: 1px solid black;
+  border-radius: 4px;
+  font-size: 1.1em;
+  position: relative;
+}
+.option-checkmark {
+  left: 1px;
+  position: absolute;
 }
 .calc-display {
   display: flex;

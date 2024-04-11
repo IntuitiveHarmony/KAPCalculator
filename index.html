@@ -23,7 +23,7 @@
     </div>
     <div class="option-container section">
       <h4>Do you have Medicaid, Triwest or have you worked with Dr. Aal in the past?</h4>
-      <button class="option-radio" id="medicaid-button"><i class="option-checkmark fa-solid fa-check hidden"></i> Click for Yes</button>
+      <div class="option-radio check-box" id="medicaid-button"><i class="option-checkmark fa-solid fa-check hidden" id="medicaid-checkmark"></i></div>
       <p class="content"></p>
       <p class="content"></p>
       <div class="option-modal hidden">
@@ -165,15 +165,23 @@
       <!-- SUB Controls -->
       <div class="medicine-controls hidden" id="sub-controls">
         <p class="content">Sublingual administration involves placing the medicine under the tongue, allowing it to be absorbed directly into the bloodstream through the mucous membranes.</p>
-        <div class="im-info content">
+        <div class="sub-info content">
           <h5>Consult Provider:</h5>
           <div class="sub-consult-cell">
-            <p>$<span class="number" id="sub-consult"></span></p>
+            <p class="content">$<span class="number" id="sub-consult"></span></p>
           </div>
+        </div>
+        <div class="sub-info content">
+          <h5>Medicine (8 - 15 sessions):</h5>
+          <p class="content">$<span class="number" id="sub-medicine-cost"></span></p>
+        </div>
+        <h4>Would you like a psychiatrist available?</h4>
+        <div class="sub-info content">
+          <div class="option-radio check-box" id="room-option-button"><i class="option-checkmark fa-solid fa-check hidden" id="room-option-checkmark"></i></div>
+          <p class="content">$</p><span id="room-fee"></span>
         </div>
       </div>
     </div>
-  </div>
   </div>
 
 </body>

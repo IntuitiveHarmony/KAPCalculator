@@ -27,6 +27,7 @@ let medicineType;
 let numIVSession = 4;
 let numIMSession = 4;
 let numSubSession = 4;
+let roomOption = false;
 
 const iv = {
   initialLow: 475,
@@ -62,7 +63,7 @@ const medicaidButton = document.getElementById("medicaid-button");
 const medicaidInputButton = document.getElementById("medicaid-input");
 const previousWorkInputButton = document.getElementById("previous-work-input");
 const optionModalElement = document.querySelector(".option-modal");
-const checkElement = document.querySelector(".option-checkmark");
+const medicaidCheckElement = document.getElementById("medicaid-checkmark");
 
 // Pre-Work sessions
 const preWorkContainer = document.querySelector(".pre-work-container");
@@ -98,6 +99,12 @@ const ivSessionHigh = document.getElementById("iv-sessions-high");
 const ivSessionAdmin = document.getElementById("iv-admin");
 const ivIntegrationLow = document.getElementById("iv-integration-low");
 const ivIntegrationHigh = document.getElementById("iv-integration-high");
+
+// Sub Buttons and sliders
+const subMedicineCostElement = document.getElementById("sub-medicine-cost");
+const roomOptionCheckbox = document.getElementById("room-option-button");
+const roomOptionCheckmark = document.getElementById("room-option-checkmark");
+const roomFeeElement = document.getElementById("room-fee");
 
 const integrationContainers = document.querySelectorAll(
   ".integration-container"
@@ -245,18 +252,19 @@ medicaidButton.addEventListener("click", () => {
     modalOpen = false; // update flag
     optionModalElement.classList.add("hidden"); // Hide Modal
     // Hide Checkmark
-    checkElement.classList.add("hidden");
+    medicaidCheckElement.classList.add("hidden");
     medicaidButton.classList.remove("selected-radio");
     // Reset Option Variables
     hasMedicaid = false;
     preWorkComplete = false;
+    numIntroSession = 3;
   }
   // Open Modal
   else {
     modalOpen = true; // update flag
     optionModalElement.classList.remove("hidden"); // Show Modal
     // Show Checkmark
-    checkElement.classList.remove("hidden");
+    medicaidCheckElement.classList.remove("hidden");
     medicaidButton.classList.add("selected-radio");
     // Reset Button selections
     medicaidInputButton.classList.remove("selected-radio");
@@ -289,6 +297,22 @@ previousWorkInputButton.addEventListener("click", () => {
     preWorkComplete = true;
     previousWorkInputButton.classList.add("selected-radio");
     numIntroSession = 0; // Take pre-KAP sessions out of the equation
+  }
+});
+
+roomOptionCheckbox.addEventListener("click", () => {
+  if (roomOption) {
+    roomOption = false;
+    // Hide Checkmark
+    roomOptionCheckmark.classList.add("hidden");
+    // Remove color
+    roomOptionCheckbox.classList.remove("selected-radio");
+  } else {
+    roomOption = true;
+    // Show checkmark
+    roomOptionCheckmark.classList.remove("hidden");
+    // Add color
+    roomOptionCheckbox.classList.add("selected-radio");
   }
 });
 
@@ -428,6 +452,8 @@ document.addEventListener("DOMContentLoaded", function () {
     numIMIntegration,
     shan.high
   );
+  subMedicineCostElement.textContent = sub.medsHigh;
+  roomFeeElement.textContent = sub.room.high;
 
   ivSessionAdmin.textContent = numIVSession * iv.subsequent;
   ivSessionValue.textContent = numIVSession;
