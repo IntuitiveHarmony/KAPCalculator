@@ -180,9 +180,11 @@ button {
 .pre-work-controls,
 .im-sessions-controls,
 .iv-sessions-controls,
+.sub-sessions-controls,
 .medicine-admin,
 .medicine-type-controls,
 .im-integration-controls,
+.sub-integration-controls,
 .iv-integration-controls {
   display: flex;
   justify-content: space-between;

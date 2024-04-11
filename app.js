@@ -105,6 +105,17 @@ const subMedicineCostElement = document.getElementById("sub-medicine-cost");
 const roomOptionCheckbox = document.getElementById("room-option-button");
 const roomOptionCheckmark = document.getElementById("room-option-checkmark");
 const roomFeeElement = document.getElementById("room-fee");
+const roomFeeContainerElement = document.getElementById("room-fee-container");
+
+const subSessionSlider = document.getElementById("sub-sessions-input");
+const subIntegrationSlider = document.getElementById("sub-integration-input");
+const subSessionValue = document.getElementById("sub-sessions-value");
+const subIntegrationValue = document.getElementById("sub-integration-value");
+const subSessionLow = document.getElementById("sub-sessions-low");
+const subSessionHigh = document.getElementById("sub-sessions-high");
+const subSessionAdmin = document.getElementById("sub-admin");
+const subIntegrationLow = document.getElementById("sub-integration-low");
+const subIntegrationHigh = document.getElementById("sub-integration-high");
 
 const integrationContainers = document.querySelectorAll(
   ".integration-container"
@@ -198,6 +209,53 @@ imIntegrationSlider.addEventListener("input", (event) => {
   );
 });
 
+// Sub sliders
+subSessionSlider.addEventListener("input", (event) => {
+  // Get the current value of the slider
+  const currentValue = event.target.value;
+  // Update variable for calculator
+  numSubSession = currentValue;
+  // Update DOM with new variable amount
+  subSessionValue.textContent = numSubSession;
+  // Calculate the cost for Shoshana and add to the DOM
+  subSessionLow.textContent = formatThousands(
+    calculateWorkCost(numSubSession, shan.low)
+  );
+  subSessionHigh.textContent = formatThousands(
+    calculateWorkCost(numSubSession, shan.high)
+  );
+  // Update Integration sessions variable and DOM
+  numSubIntegration = numSubSession;
+  subIntegrationValue.textContent = numSubIntegration;
+  // Calculate integration cost and update DOM
+  subIntegrationLow.textContent = formatThousands(
+    calculateWorkCost(numSubIntegration, shan.low)
+  );
+  subIntegrationHigh.textContent = formatThousands(
+    calculateWorkCost(numSubIntegration, shan.high)
+  );
+  // Update Integration slider params
+  subIntegrationSlider.min = numSubSession;
+  subIntegrationSlider.value = numSubSession;
+  // Enable the Integration slider
+  subIntegrationSlider.disabled = false;
+});
+
+subIntegrationSlider.addEventListener("input", (event) => {
+  // Update the variable
+  numSubIntegration = event.target.value;
+  // Update the DOM
+  subIntegrationValue.textContent = numSubIntegration;
+  // Update the cost
+  subIntegrationLow.textContent = formatThousands(
+    calculateWorkCost(numSubIntegration, shan.low)
+  );
+  subIntegrationHigh.textContent = formatThousands(
+    calculateWorkCost(numSubIntegration, shan.high)
+  );
+});
+
+// IV Sliders
 ivSessionSlider.addEventListener("input", (event) => {
   // Get the current value of the slider
   const currentValue = event.target.value;
@@ -302,17 +360,23 @@ previousWorkInputButton.addEventListener("click", () => {
 
 roomOptionCheckbox.addEventListener("click", () => {
   if (roomOption) {
+    // Remove cost from calculator
     roomOption = false;
     // Hide Checkmark
     roomOptionCheckmark.classList.add("hidden");
     // Remove color
     roomOptionCheckbox.classList.remove("selected-radio");
+    // Hide the cost in th DOM
+    roomFeeContainerElement.classList.add("hidden");
   } else {
+    // Put cost into calculator
     roomOption = true;
     // Show checkmark
     roomOptionCheckmark.classList.remove("hidden");
     // Add color
     roomOptionCheckbox.classList.add("selected-radio");
+    // Show the cost in th DOM
+    roomFeeContainerElement.classList.remove("hidden");
   }
 });
 
@@ -424,6 +488,25 @@ const calculateTotalCost = () => {
     // Consult
     lowTotalCost += sub.initial;
     highTotalCost += sub.initial;
+    // Cost of Medicine
+    lowTotalCost += sub.medsHigh;
+    highTotalCost += sub.medsHigh;
+    // Cost of room option
+    if (roomOption) {
+      lowTotalCost += sub.room.high;
+      highTotalCost += sub.room.high;
+    }
+    // Cost of KAP Sessions
+    lowTotalCost += calculateWorkCost(numSubSession, shan.low);
+    highTotalCost += calculateWorkCost(numSubSession, shan.high);
+    // Incorporate Integration if no medicaid
+    if (hasMedicaid != true) {
+      // Check for positive value first
+      if (true) {
+        lowTotalCost += calculateWorkCost(numSubIntegration, shan.low);
+        highTotalCost += calculateWorkCost(numSubIntegration, shan.high);
+      }
+    }
   }
 
   // Display total cost estimates to DOM
@@ -452,8 +535,19 @@ document.addEventListener("DOMContentLoaded", function () {
     numIMIntegration,
     shan.high
   );
+
   subMedicineCostElement.textContent = sub.medsHigh;
   roomFeeElement.textContent = sub.room.high;
+  subSessionLow.textContent = calculateWorkCost(numSubSession, shan.low);
+  subSessionHigh.textContent = calculateWorkCost(numSubSession, shan.high);
+  subIntegrationLow.textContent = calculateWorkCost(
+    numSubIntegration,
+    shan.low
+  );
+  subIntegrationHigh.textContent = calculateWorkCost(
+    numSubIntegration,
+    shan.high
+  );
 
   ivSessionAdmin.textContent = numIVSession * iv.subsequent;
   ivSessionValue.textContent = numIVSession;

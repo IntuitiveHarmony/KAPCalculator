@@ -178,7 +178,35 @@
         <h4>Would you like a psychiatrist available?</h4>
         <div class="sub-info content">
           <div class="option-radio check-box" id="room-option-button"><i class="option-checkmark fa-solid fa-check hidden" id="room-option-checkmark"></i></div>
-          <p class="content">$</p><span id="room-fee"></span>
+          <p class="hidden" id="room-fee-container" class="content">$<span id="room-fee"></span></p>
+        </div>
+        <h4>Sublingual KAP Sessions</h4>
+        <div class="sub-sessions-controls content">
+          <input class="slider" type="range" min="4" max="20" value="0" id="sub-sessions-input">
+          <p><span id="sub-sessions-value"></span></p>
+          <div class="pre-low-cell">
+            <p>$<span class="number" id="sub-sessions-low"></span></p>
+            <p>low</p>
+          </div>
+          <div class="pre-high-cell">
+            <p>$<span class="number" id="sub-sessions-high"></span></p>
+            <p>high</p>
+          </div>
+        </div>
+        <div class="integration-container">
+          <h4>Integration Sessions</h4>
+          <div class="sub-integration-controls content">
+            <input class="slider" type="range" min="4" max="20" value="0" id="sub-integration-input">
+            <p><span id="sub-integration-value"></span></p>
+            <div class="pre-low-cell">
+              <p>$<span class="number" id="sub-integration-low"></span></p>
+              <p>low</p>
+            </div>
+            <div class="pre-high-cell">
+              <p>$<span class="number" id="sub-integration-high"></span></p>
+              <p>high</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
