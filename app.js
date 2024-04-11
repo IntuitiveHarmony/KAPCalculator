@@ -215,6 +215,12 @@ subSessionSlider.addEventListener("input", (event) => {
   const currentValue = event.target.value;
   // Update variable for calculator
   numSubSession = currentValue;
+  // Update cost of medicine in DOM based on amount of tabs
+  if (numSubSession > 15) {
+    subMedicineCostElement.textContent = sub.medsHigh * 2;
+  } else if (numSubSession <= 15) {
+    subMedicineCostElement.textContent = sub.medsHigh;
+  }
   // Update DOM with new variable amount
   subSessionValue.textContent = numSubSession;
   // Calculate the cost for Shoshana and add to the DOM
@@ -488,9 +494,9 @@ const calculateTotalCost = () => {
     // Consult
     lowTotalCost += sub.initial;
     highTotalCost += sub.initial;
-    // Cost of Medicine
-    lowTotalCost += sub.medsHigh;
-    highTotalCost += sub.medsHigh;
+    // Cost of Medicine multiply cost if more than 15 sessions as there are 15 tabs in a bottle
+    lowTotalCost += numSubSession > 15 ? sub.medsHigh * 2 : sub.medsHigh;
+    highTotalCost += numSubSession > 15 ? sub.medsHigh * 2 : sub.medsHigh;
     // Cost of room option
     if (roomOption) {
       lowTotalCost += sub.room.high;
@@ -538,6 +544,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   subMedicineCostElement.textContent = sub.medsHigh;
   roomFeeElement.textContent = sub.room.high;
+  subSessionValue.textContent = numSubSession;
+  subIntegrationValue.textContent = numSubSession;
   subSessionLow.textContent = calculateWorkCost(numSubSession, shan.low);
   subSessionHigh.textContent = calculateWorkCost(numSubSession, shan.high);
   subIntegrationLow.textContent = calculateWorkCost(
