@@ -129,7 +129,7 @@ table {
 /* End reset */
 
 :root {
-  --selected-color: rgb(73, 224, 110);
+  --selected-color: rgb(37, 123, 244);
 }
 
 body {
@@ -144,11 +144,11 @@ h4 {
 button {
   background-color: rgb(225, 225, 225);
   border: 1px solid #676767;
-  padding: 6px 4px;
+  padding: 7px 5px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 12px;
+  font-size: 0.75em;
   font-weight: bold;
   border-radius: 20px;
   cursor: pointer;
@@ -183,6 +183,7 @@ button {
 
 .selected-radio {
   background-color: var(--selected-color);
+  color: aliceblue;
 }
 .hidden {
   display: none;
@@ -229,11 +230,11 @@ button {
 }
 .check-box {
   cursor: pointer;
-  height: 17px;
-  width: 17px;
+  height: 23px;
+  width: 23px;
   border: 1px solid black;
   border-radius: 4px;
-  font-size: 1.1em;
+  font-size: 1.5em;
   position: relative;
 }
 .option-checkmark {
