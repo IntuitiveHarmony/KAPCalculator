@@ -17,10 +17,6 @@
       <h1 id="KAP-header">KAP Cost Calculator</h1>
       <h3 class="content">Adjust the following parameters to <em>estimate</em> your total cost:</h3>
     </div>
-    <div class="calc-display content">
-      <p>Low Total $<span class="number" id="low-total"></span></p>
-      <p>High Total $<span class="number" id="high-total"></span></p>
-    </div>
     <div class="option-container section">
       <h4>Do you have Medicaid, Triwest or have you worked with Dr. Aal in the past?</h4>
       <div class="option-radio check-box" id="medicaid-button"><i class="option-checkmark fa-solid fa-check hidden" id="medicaid-checkmark"></i></div>
@@ -211,6 +207,14 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="totals-container section">
+      <h4>Here is the <em>estimated</em> cost range of KAP based on the options you chose above.</h4>
+      <div class="calc-display content ">
+        <p class="total-info-container">Low Total: $<span class="number" id="low-total"></span></p>
+        <p class="total-info-container">High Total: $<span class="number" id="high-total"></span></p>
+      </div>
+      <p class="content"> Please contact your provider for any questions or clarification.</p>
     </div>
   </div>
 

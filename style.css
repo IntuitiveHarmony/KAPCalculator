@@ -130,6 +130,7 @@ table {
 
 :root {
   --selected-color: rgb(37, 123, 244);
+  --secondary-color: rgb(186, 215, 255);
 }
 
 body {
@@ -148,7 +149,6 @@ button {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 0.75em;
   font-weight: bold;
   border-radius: 7px;
   cursor: pointer;
@@ -191,6 +191,13 @@ button {
 }
 .number {
   font-size: 1.1em;
+}
+.total-info-container {
+  border-radius: 7px;
+  border: 1px solid #676767;
+  background-color: var(--secondary-color);
+  margin: 0.5em;
+  padding: 0.3em;
 }
 .content-container {
   max-width: 600px;
@@ -245,6 +252,7 @@ button {
 .calc-display {
   display: flex;
   justify-content: space-around;
+  font-size: 1.2em;
 }
 .option-controls {
   display: flex;
