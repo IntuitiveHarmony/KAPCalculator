@@ -221,6 +221,8 @@ subSessionSlider.addEventListener("input", (event) => {
   } else if (numSubSession <= 15) {
     subMedicineCostElement.textContent = sub.medsHigh;
   }
+  // Update the DOM with the new room cost
+  roomFeeElement.textContent = numSubSession * sub.room.high;
   // Update DOM with new variable amount
   subSessionValue.textContent = numSubSession;
   // Calculate the cost for Shoshana and add to the DOM
@@ -499,8 +501,8 @@ const calculateTotalCost = () => {
     highTotalCost += numSubSession > 15 ? sub.medsHigh * 2 : sub.medsHigh;
     // Cost of room option
     if (roomOption) {
-      lowTotalCost += sub.room.high;
-      highTotalCost += sub.room.high;
+      lowTotalCost += sub.room.high * numSubSession;
+      highTotalCost += sub.room.high * numSubSession;
     }
     // Cost of KAP Sessions
     lowTotalCost += calculateWorkCost(numSubSession, shan.low);
@@ -543,7 +545,7 @@ document.addEventListener("DOMContentLoaded", function () {
   );
 
   subMedicineCostElement.textContent = sub.medsHigh;
-  roomFeeElement.textContent = sub.room.high;
+  roomFeeElement.textContent = sub.room.high * numSubSession;
   subSessionValue.textContent = numSubSession;
   subIntegrationValue.textContent = numSubSession;
   subSessionLow.textContent = calculateWorkCost(numSubSession, shan.low);
