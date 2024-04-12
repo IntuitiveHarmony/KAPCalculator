@@ -150,9 +150,10 @@ button {
   display: inline-block;
   font-size: 0.75em;
   font-weight: bold;
-  border-radius: 20px;
+  border-radius: 7px;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin: 0.3em;
 }
 .slider {
   -webkit-appearance: none;
@@ -232,7 +233,7 @@ button {
   cursor: pointer;
   height: 23px;
   width: 23px;
-  border: 1px solid black;
+  border: 1px solid #676767;
   border-radius: 4px;
   font-size: 1.5em;
   position: relative;
