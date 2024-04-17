@@ -135,6 +135,10 @@ table {
 
 body {
   font-family: Verdana, sans-serif;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
 }
 h4 {
   font-weight: bold;
@@ -154,6 +158,23 @@ button {
   cursor: pointer;
   transition: all 0.3s ease;
   margin: 0.3em;
+}
+a {
+  cursor: pointer;
+  color: rgb(246, 187, 235);
+  text-decoration: none;
+}
+a:hover {
+  color: rgb(255, 246, 123);
+  text-decoration: underline;
+}
+footer {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  color: aliceblue;
+  background-color: rgb(0, 132, 172);
+  padding: 0.75em;
 }
 .slider {
   -webkit-appearance: none;
@@ -197,9 +218,10 @@ button {
   border: 1px solid #676767;
   background-color: var(--secondary-color);
   margin: 0.5em;
-  padding: 0.3em;
+  padding: 0.6em;
 }
 .content-container {
+  flex: 1;
   max-width: 600px;
   margin: 0.5em;
   display: flex;
@@ -210,9 +232,11 @@ button {
 }
 .section {
   padding: 0.7em;
-  padding-top: 0.1em;
-  border: 2px solid rgb(84, 79, 79);
+  padding-top: 0.5em;
+  /* border: 2px solid rgb(84, 79, 79); */
   margin-bottom: 1em;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 .radio-btn-container {
   display: flex;
@@ -248,6 +272,12 @@ button {
 .option-checkmark {
   left: 1px;
   position: absolute;
+}
+.calc-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 .calc-display {
   display: flex;
